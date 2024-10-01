@@ -1,0 +1,571 @@
+From: https://github.com/ggerganov/llama.cpp.git
+
+(also see https://llava-vl.github.io/)
+
+check examples of questions to ask (and images) from:
+https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K?row=0
+
+---
+this repo is to run LLM models (a client runner) for models that I install on my local machine..
+
+git cloned https://github.com/ggerganov/llama.cpp.git and just ran make, built first time
+
+command to run/evaluate LLMs (llama / llava etc):
+
+./llama.cpp/build/bin/llama-llava-cli -m ./mys/ggml-model-f16.gguf --mmproj ./mys/mmproj-model-f16.gguf --image <address to image> -p "your question"
+
+download the models from https://huggingface.co/mys/ggml_llava-v1.5-7b/tree/main
+
+starting with the quantized q4 version (4GB) first:
+
+llama.cpp % ./llama.cpp/build/bin/llama-llava-cli -m ./mymodels/ggml-model-q4_k.gguf  --mmproj ./mymodels/ggml-model-q4_k.gguf  --image <address to image> -p "your question"
+
+First dumps (when image path is invalid):
+
+./run thisimage "what am I seeing in this image?"
+build: 3851 (08a43d05) with Apple clang version 16.0.0 (clang-1600.0.26.3) for x86_64-apple-darwin23.6.0
+llama_model_loader: loaded meta data with 19 key-value pairs and 291 tensors from ./mymodels/ggml-model-q4_k.gguf (version GGUF V2)
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.name str              = LLaMA v2
+llama_model_loader: - kv   2:                       llama.context_length u32              = 4096
+llama_model_loader: - kv   3:                     llama.embedding_length u32              = 4096
+llama_model_loader: - kv   4:                          llama.block_count u32              = 32
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32              = 11008
+llama_model_loader: - kv   6:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv   7:                 llama.attention.head_count u32              = 32
+llama_model_loader: - kv   8:              llama.attention.head_count_kv u32              = 32
+llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  10:                          general.file_type u32              = 15
+llama_model_loader: - kv  11:                       tokenizer.ggml.model str              = llama
+llama_model_loader: - kv  12:                      tokenizer.ggml.tokens arr[str,32000]   = ["<unk>", "<s>", "</s>", "<0x00>", "<...
+llama_model_loader: - kv  13:                      tokenizer.ggml.scores arr[f32,32000]   = [0.000000, 0.000000, 0.000000, 0.0000...
+llama_model_loader: - kv  14:                  tokenizer.ggml.token_type arr[i32,32000]   = [2, 3, 3, 6, 6, 6, 6, 6, 6, 6, 6, 6, ...
+llama_model_loader: - kv  15:                tokenizer.ggml.bos_token_id u32              = 1
+llama_model_loader: - kv  16:                tokenizer.ggml.eos_token_id u32              = 2
+llama_model_loader: - kv  17:            tokenizer.ggml.padding_token_id u32              = 0
+llama_model_loader: - kv  18:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   65 tensors
+llama_model_loader: - type q4_K:  193 tensors
+llama_model_loader: - type q6_K:   33 tensors
+llm_load_vocab: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+llm_load_vocab: special tokens cache size = 3
+llm_load_vocab: token to piece cache size = 0.1684 MB
+llm_load_print_meta: format           = GGUF V2
+llm_load_print_meta: arch             = llama
+llm_load_print_meta: vocab type       = SPM
+llm_load_print_meta: n_vocab          = 32000
+llm_load_print_meta: n_merges         = 0
+llm_load_print_meta: vocab_only       = 0
+llm_load_print_meta: n_ctx_train      = 4096
+llm_load_print_meta: n_embd           = 4096
+llm_load_print_meta: n_layer          = 32
+llm_load_print_meta: n_head           = 32
+llm_load_print_meta: n_head_kv        = 32
+llm_load_print_meta: n_rot            = 128
+llm_load_print_meta: n_swa            = 0
+llm_load_print_meta: n_embd_head_k    = 128
+llm_load_print_meta: n_embd_head_v    = 128
+llm_load_print_meta: n_gqa            = 1
+llm_load_print_meta: n_embd_k_gqa     = 4096
+llm_load_print_meta: n_embd_v_gqa     = 4096
+llm_load_print_meta: f_norm_eps       = 0.0e+00
+llm_load_print_meta: f_norm_rms_eps   = 1.0e-05
+llm_load_print_meta: f_clamp_kqv      = 0.0e+00
+llm_load_print_meta: f_max_alibi_bias = 0.0e+00
+llm_load_print_meta: f_logit_scale    = 0.0e+00
+llm_load_print_meta: n_ff             = 11008
+llm_load_print_meta: n_expert         = 0
+llm_load_print_meta: n_expert_used    = 0
+llm_load_print_meta: causal attn      = 1
+llm_load_print_meta: pooling type     = 0
+llm_load_print_meta: rope type        = 0
+llm_load_print_meta: rope scaling     = linear
+llm_load_print_meta: freq_base_train  = 10000.0
+llm_load_print_meta: freq_scale_train = 1
+llm_load_print_meta: n_ctx_orig_yarn  = 4096
+llm_load_print_meta: rope_finetuned   = unknown
+llm_load_print_meta: ssm_d_conv       = 0
+llm_load_print_meta: ssm_d_inner      = 0
+llm_load_print_meta: ssm_d_state      = 0
+llm_load_print_meta: ssm_dt_rank      = 0
+llm_load_print_meta: ssm_dt_b_c_rms   = 0
+llm_load_print_meta: model type       = 7B
+llm_load_print_meta: model ftype      = Q4_K - Medium
+llm_load_print_meta: model params     = 6.74 B
+llm_load_print_meta: model size       = 3.80 GiB (4.84 BPW) 
+llm_load_print_meta: general.name     = LLaMA v2
+llm_load_print_meta: BOS token        = 1 '<s>'
+llm_load_print_meta: EOS token        = 2 '</s>'
+llm_load_print_meta: UNK token        = 0 '<unk>'
+llm_load_print_meta: PAD token        = 0 '<unk>'
+llm_load_print_meta: LF token         = 13 '<0x0A>'
+llm_load_print_meta: EOG token        = 2 '</s>'
+llm_load_print_meta: max token length = 48
+llm_load_tensors: ggml ctx size =    0.27 MiB
+ggml_backend_metal_log_allocated_size: warning: current allocated size is greater than the recommended max working set size
+
+ggml_backend_metal_log_allocated_size: warning: current allocated size is greater than the recommended max working set size
+llm_load_tensors: offloading 32 repeating layers to GPU
+llm_load_tensors: offloading non-repeating layers to GPU
+llm_load_tensors: offloaded 33/33 layers to GPU
+llm_load_tensors:      Metal buffer size =  3820.93 MiB
+llm_load_tensors:        CPU buffer size =    70.31 MiB
+..................................................................................................
+clip_model_load: model name:   openai/clip-vit-large-patch14-336
+clip_model_load: description:  image encoder for LLaVA
+clip_model_load: GGUF version: 2
+clip_model_load: alignment:    32
+clip_model_load: n_tensors:    377
+clip_model_load: n_kv:         18
+clip_model_load: ftype:        f16
+
+clip_model_load: loaded meta data with 18 key-value pairs and 377 tensors from ./mymodels/mmproj-model-f16.gguf
+clip_model_load: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+clip_model_load: - kv   0:                       general.architecture str              = clip
+clip_model_load: - kv   1:                      clip.has_text_encoder bool             = false
+clip_model_load: - kv   2:                    clip.has_vision_encoder bool             = true
+clip_model_load: - kv   3:                   clip.has_llava_projector bool             = true
+clip_model_load: - kv   4:                          general.file_type u32              = 1
+clip_model_load: - kv   5:                               general.name str              = openai/clip-vit-large-patch14-336
+clip_model_load: - kv   6:                        general.description str              = image encoder for LLaVA
+clip_model_load: - kv   7:                     clip.vision.image_size u32              = 336
+clip_model_load: - kv   8:                     clip.vision.patch_size u32              = 14
+clip_model_load: - kv   9:               clip.vision.embedding_length u32              = 1024
+clip_model_load: - kv  10:            clip.vision.feed_forward_length u32              = 4096
+clip_model_load: - kv  11:                 clip.vision.projection_dim u32              = 768
+clip_model_load: - kv  12:           clip.vision.attention.head_count u32              = 16
+clip_model_load: - kv  13:   clip.vision.attention.layer_norm_epsilon f32              = 0.000010
+clip_model_load: - kv  14:                    clip.vision.block_count u32              = 23
+clip_model_load: - kv  15:                     clip.vision.image_mean arr[f32,3]       = [0.481455, 0.457828, 0.408211]
+clip_model_load: - kv  16:                      clip.vision.image_std arr[f32,3]       = [0.268630, 0.261303, 0.275777]
+clip_model_load: - kv  17:                              clip.use_gelu bool             = false
+clip_model_load: - type  f32:  235 tensors
+clip_model_load: - type  f16:  142 tensors
+ggml_metal_init: allocating
+ggml_metal_init: found device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: picking default device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: using embedded metal library
+ggml_metal_init: GPU name:   Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: GPU family: MTLGPUFamilyCommon3 (3003)
+ggml_metal_init: GPU family: MTLGPUFamilyMetal3  (5001)
+ggml_metal_init: simdgroup reduction support   = true
+ggml_metal_init: simdgroup matrix mul. support = false
+ggml_metal_init: hasUnifiedMemory              = true
+ggml_metal_init: recommendedMaxWorkingSetSize  =  1610.61 MB
+ggml_metal_init: skipping kernel_mul_mm_f32_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_f16_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q8_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q2_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q3_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q6_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_m_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_nl_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f32_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f16_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q8_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q2_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q3_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q6_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_m_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_nl_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h64            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h80            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h96            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h112           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h128           (not supported)
+clip_model_load: CLIP using Metal backend
+clip_model_load: text_encoder:   0
+clip_model_load: vision_encoder: 1
+clip_model_load: llava_projector:  1
+clip_model_load: minicpmv_projector:  0
+clip_model_load: model size:     595.49 MB
+clip_model_load: metadata size:  0.13 MB
+clip_model_load: params backend buffer size =  595.49 MB (377 tensors)
+key clip.vision.image_grid_pinpoints not found in file
+key clip.vision.mm_patch_merge_type not found in file
+key clip.vision.image_crop_resolution not found in file
+clip_model_load: compute allocated memory: 32.89 MB
+llama_new_context_with_model: n_ctx      = 2048
+llama_new_context_with_model: n_batch    = 2048
+llama_new_context_with_model: n_ubatch   = 512
+llama_new_context_with_model: flash_attn = 0
+llama_new_context_with_model: freq_base  = 10000.0
+llama_new_context_with_model: freq_scale = 1
+ggml_metal_init: allocating
+ggml_metal_init: found device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: picking default device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: using embedded metal library
+ggml_metal_init: GPU name:   Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: GPU family: MTLGPUFamilyCommon3 (3003)
+ggml_metal_init: GPU family: MTLGPUFamilyMetal3  (5001)
+ggml_metal_init: simdgroup reduction support   = true
+ggml_metal_init: simdgroup matrix mul. support = false
+ggml_metal_init: hasUnifiedMemory              = true
+ggml_metal_init: recommendedMaxWorkingSetSize  =  1610.61 MB
+ggml_metal_init: skipping kernel_mul_mm_f32_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_f16_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q8_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q2_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q3_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q6_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_m_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_nl_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f32_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f16_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q8_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q2_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q3_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q6_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_m_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_nl_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h64            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h80            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h96            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h112           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h128           (not supported)
+llama_kv_cache_init:      Metal KV buffer size =  1024.00 MiB
+llama_new_context_with_model: KV self size  = 1024.00 MiB, K (f16):  512.00 MiB, V (f16):  512.00 MiB
+llama_new_context_with_model:        CPU  output buffer size =     0.12 MiB
+llama_new_context_with_model:      Metal compute buffer size =   164.00 MiB
+llama_new_context_with_model:        CPU compute buffer size =    12.01 MiB
+llama_new_context_with_model: graph nodes  = 1030
+llama_new_context_with_model: graph splits = 2
+load_file_to_bytes: can't read file thisimage
+llava_image_embed_make_with_filename: failed to load thisimage
+load_image: is thisimage really an image file?
+main: failed to load image thisimage. Terminating
+
+(base) anupkaul@147dda4c0851 llama.cpp % 
+
+
+Passing an actual image with a question .. makes the code hand on a callback timeout error from GPU:
+
+./run ./myimages/mood_driver.png "what am I seeing here?"
+build: 3851 (08a43d05) with Apple clang version 16.0.0 (clang-1600.0.26.3) for x86_64-apple-darwin23.6.0
+llama_model_loader: loaded meta data with 19 key-value pairs and 291 tensors from ./mymodels/ggml-model-q4_k.gguf (version GGUF V2)
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = llama
+llama_model_loader: - kv   1:                               general.name str              = LLaMA v2
+llama_model_loader: - kv   2:                       llama.context_length u32              = 4096
+llama_model_loader: - kv   3:                     llama.embedding_length u32              = 4096
+llama_model_loader: - kv   4:                          llama.block_count u32              = 32
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32              = 11008
+llama_model_loader: - kv   6:                 llama.rope.dimension_count u32              = 128
+llama_model_loader: - kv   7:                 llama.attention.head_count u32              = 32
+llama_model_loader: - kv   8:              llama.attention.head_count_kv u32              = 32
+llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32              = 0.000010
+llama_model_loader: - kv  10:                          general.file_type u32              = 15
+llama_model_loader: - kv  11:                       tokenizer.ggml.model str              = llama
+llama_model_loader: - kv  12:                      tokenizer.ggml.tokens arr[str,32000]   = ["<unk>", "<s>", "</s>", "<0x00>", "<...
+llama_model_loader: - kv  13:                      tokenizer.ggml.scores arr[f32,32000]   = [0.000000, 0.000000, 0.000000, 0.0000...
+llama_model_loader: - kv  14:                  tokenizer.ggml.token_type arr[i32,32000]   = [2, 3, 3, 6, 6, 6, 6, 6, 6, 6, 6, 6, ...
+llama_model_loader: - kv  15:                tokenizer.ggml.bos_token_id u32              = 1
+llama_model_loader: - kv  16:                tokenizer.ggml.eos_token_id u32              = 2
+llama_model_loader: - kv  17:            tokenizer.ggml.padding_token_id u32              = 0
+llama_model_loader: - kv  18:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:   65 tensors
+llama_model_loader: - type q4_K:  193 tensors
+llama_model_loader: - type q6_K:   33 tensors
+llm_load_vocab: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+llm_load_vocab: special tokens cache size = 3
+llm_load_vocab: token to piece cache size = 0.1684 MB
+llm_load_print_meta: format           = GGUF V2
+llm_load_print_meta: arch             = llama
+llm_load_print_meta: vocab type       = SPM
+llm_load_print_meta: n_vocab          = 32000
+llm_load_print_meta: n_merges         = 0
+llm_load_print_meta: vocab_only       = 0
+llm_load_print_meta: n_ctx_train      = 4096
+llm_load_print_meta: n_embd           = 4096
+llm_load_print_meta: n_layer          = 32
+llm_load_print_meta: n_head           = 32
+llm_load_print_meta: n_head_kv        = 32
+llm_load_print_meta: n_rot            = 128
+llm_load_print_meta: n_swa            = 0
+llm_load_print_meta: n_embd_head_k    = 128
+llm_load_print_meta: n_embd_head_v    = 128
+llm_load_print_meta: n_gqa            = 1
+llm_load_print_meta: n_embd_k_gqa     = 4096
+llm_load_print_meta: n_embd_v_gqa     = 4096
+llm_load_print_meta: f_norm_eps       = 0.0e+00
+llm_load_print_meta: f_norm_rms_eps   = 1.0e-05
+llm_load_print_meta: f_clamp_kqv      = 0.0e+00
+llm_load_print_meta: f_max_alibi_bias = 0.0e+00
+llm_load_print_meta: f_logit_scale    = 0.0e+00
+llm_load_print_meta: n_ff             = 11008
+llm_load_print_meta: n_expert         = 0
+llm_load_print_meta: n_expert_used    = 0
+llm_load_print_meta: causal attn      = 1
+llm_load_print_meta: pooling type     = 0
+llm_load_print_meta: rope type        = 0
+llm_load_print_meta: rope scaling     = linear
+llm_load_print_meta: freq_base_train  = 10000.0
+llm_load_print_meta: freq_scale_train = 1
+llm_load_print_meta: n_ctx_orig_yarn  = 4096
+llm_load_print_meta: rope_finetuned   = unknown
+llm_load_print_meta: ssm_d_conv       = 0
+llm_load_print_meta: ssm_d_inner      = 0
+llm_load_print_meta: ssm_d_state      = 0
+llm_load_print_meta: ssm_dt_rank      = 0
+llm_load_print_meta: ssm_dt_b_c_rms   = 0
+llm_load_print_meta: model type       = 7B
+llm_load_print_meta: model ftype      = Q4_K - Medium
+llm_load_print_meta: model params     = 6.74 B
+llm_load_print_meta: model size       = 3.80 GiB (4.84 BPW) 
+llm_load_print_meta: general.name     = LLaMA v2
+llm_load_print_meta: BOS token        = 1 '<s>'
+llm_load_print_meta: EOS token        = 2 '</s>'
+llm_load_print_meta: UNK token        = 0 '<unk>'
+llm_load_print_meta: PAD token        = 0 '<unk>'
+llm_load_print_meta: LF token         = 13 '<0x0A>'
+llm_load_print_meta: EOG token        = 2 '</s>'
+llm_load_print_meta: max token length = 48
+llm_load_tensors: ggml ctx size =    0.27 MiB
+ggml_backend_metal_log_allocated_size: warning: current allocated size is greater than the recommended max working set size
+
+ggml_backend_metal_log_allocated_size: warning: current allocated size is greater than the recommended max working set size
+llm_load_tensors: offloading 32 repeating layers to GPU
+llm_load_tensors: offloading non-repeating layers to GPU
+llm_load_tensors: offloaded 33/33 layers to GPU
+llm_load_tensors:      Metal buffer size =  3820.93 MiB
+llm_load_tensors:        CPU buffer size =    70.31 MiB
+..................................................................................................
+clip_model_load: model name:   openai/clip-vit-large-patch14-336
+clip_model_load: description:  image encoder for LLaVA
+clip_model_load: GGUF version: 2
+clip_model_load: alignment:    32
+clip_model_load: n_tensors:    377
+clip_model_load: n_kv:         18
+clip_model_load: ftype:        f16
+
+clip_model_load: loaded meta data with 18 key-value pairs and 377 tensors from ./mymodels/mmproj-model-f16.gguf
+clip_model_load: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+clip_model_load: - kv   0:                       general.architecture str              = clip
+clip_model_load: - kv   1:                      clip.has_text_encoder bool             = false
+clip_model_load: - kv   2:                    clip.has_vision_encoder bool             = true
+clip_model_load: - kv   3:                   clip.has_llava_projector bool             = true
+clip_model_load: - kv   4:                          general.file_type u32              = 1
+clip_model_load: - kv   5:                               general.name str              = openai/clip-vit-large-patch14-336
+clip_model_load: - kv   6:                        general.description str              = image encoder for LLaVA
+clip_model_load: - kv   7:                     clip.vision.image_size u32              = 336
+clip_model_load: - kv   8:                     clip.vision.patch_size u32              = 14
+clip_model_load: - kv   9:               clip.vision.embedding_length u32              = 1024
+clip_model_load: - kv  10:            clip.vision.feed_forward_length u32              = 4096
+clip_model_load: - kv  11:                 clip.vision.projection_dim u32              = 768
+clip_model_load: - kv  12:           clip.vision.attention.head_count u32              = 16
+clip_model_load: - kv  13:   clip.vision.attention.layer_norm_epsilon f32              = 0.000010
+clip_model_load: - kv  14:                    clip.vision.block_count u32              = 23
+clip_model_load: - kv  15:                     clip.vision.image_mean arr[f32,3]       = [0.481455, 0.457828, 0.408211]
+clip_model_load: - kv  16:                      clip.vision.image_std arr[f32,3]       = [0.268630, 0.261303, 0.275777]
+clip_model_load: - kv  17:                              clip.use_gelu bool             = false
+clip_model_load: - type  f32:  235 tensors
+clip_model_load: - type  f16:  142 tensors
+ggml_metal_init: allocating
+ggml_metal_init: found device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: picking default device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: using embedded metal library
+ggml_metal_init: GPU name:   Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: GPU family: MTLGPUFamilyCommon3 (3003)
+ggml_metal_init: GPU family: MTLGPUFamilyMetal3  (5001)
+ggml_metal_init: simdgroup reduction support   = true
+ggml_metal_init: simdgroup matrix mul. support = false
+ggml_metal_init: hasUnifiedMemory              = true
+ggml_metal_init: recommendedMaxWorkingSetSize  =  1610.61 MB
+ggml_metal_init: skipping kernel_mul_mm_f32_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_f16_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q8_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q2_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q3_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q6_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_m_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_nl_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f32_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f16_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q8_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q2_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q3_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q6_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_m_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_nl_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h64            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h80            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h96            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h112           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h128           (not supported)
+clip_model_load: CLIP using Metal backend
+clip_model_load: text_encoder:   0
+clip_model_load: vision_encoder: 1
+clip_model_load: llava_projector:  1
+clip_model_load: minicpmv_projector:  0
+clip_model_load: model size:     595.49 MB
+clip_model_load: metadata size:  0.13 MB
+clip_model_load: params backend buffer size =  595.49 MB (377 tensors)
+key clip.vision.image_grid_pinpoints not found in file
+key clip.vision.mm_patch_merge_type not found in file
+key clip.vision.image_crop_resolution not found in file
+clip_model_load: compute allocated memory: 32.89 MB
+llama_new_context_with_model: n_ctx      = 2048
+llama_new_context_with_model: n_batch    = 2048
+llama_new_context_with_model: n_ubatch   = 512
+llama_new_context_with_model: flash_attn = 0
+llama_new_context_with_model: freq_base  = 10000.0
+llama_new_context_with_model: freq_scale = 1
+ggml_metal_init: allocating
+ggml_metal_init: found device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: picking default device: Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: using embedded metal library
+ggml_metal_init: GPU name:   Intel(R) Iris(TM) Plus Graphics
+ggml_metal_init: GPU family: MTLGPUFamilyCommon3 (3003)
+ggml_metal_init: GPU family: MTLGPUFamilyMetal3  (5001)
+ggml_metal_init: simdgroup reduction support   = true
+ggml_metal_init: simdgroup matrix mul. support = false
+ggml_metal_init: hasUnifiedMemory              = true
+ggml_metal_init: recommendedMaxWorkingSetSize  =  1610.61 MB
+ggml_metal_init: skipping kernel_mul_mm_f32_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_f16_f32                    (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_1_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q8_0_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q2_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q3_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q4_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q5_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_q6_K_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_xxs_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq3_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq2_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_s_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq1_m_f32                  (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_nl_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_iq4_xs_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f32_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_f16_f32                 (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_1_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q8_0_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q2_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q3_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q4_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q5_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_q6_K_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_xxs_f32             (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq3_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq2_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_s_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq1_m_f32               (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_nl_f32              (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_iq4_xs_f32              (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h64            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h80            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h96            (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h112           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_f16_h128           (not supported)
+llama_kv_cache_init:      Metal KV buffer size =  1024.00 MiB
+llama_new_context_with_model: KV self size  = 1024.00 MiB, K (f16):  512.00 MiB, V (f16):  512.00 MiB
+llama_new_context_with_model:        CPU  output buffer size =     0.12 MiB
+llama_new_context_with_model:      Metal compute buffer size =   164.00 MiB
+llama_new_context_with_model:        CPU compute buffer size =    12.01 MiB
+llama_new_context_with_model: graph nodes  = 1030
+llama_new_context_with_model: graph splits = 2
+encode_image_with_clip: image embedding created: 576 tokens
+
+encode_image_with_clip: image encoded in  9636.61 ms by CLIP (   16.73 ms per image patch)
+ggml_metal_graph_compute: command buffer 0 failed with status 5
+error: Caused GPU Timeout Error (00000002:kIOAccelCommandBufferCallbackErrorTimeout)
+
+see https://www.youtube.com/watch?v=mxzxIa5yuXc
+and https://github.com/abetlen/llama-cpp-python/blob/main/docs/install/macos.md
+
+Try this:
+export LLAMA_NO_METAL=1 
+make
+
+
+

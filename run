@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+#./llama-llava-cli -m ./mymodels/ggml-model-q4_k.gguf  --mmproj ./mymodels/mmproj-model-f16.gguf  --image <image-path> -p "your question"
+
+# usage: ./run path-to-image "what am I seeing in this image?"
+
+#./llama-llava-cli -m ./mymodels/ggml-model-q4_k.gguf  --mmproj ./mymodels/mmproj-model-f16.gguf  --image $1 -p $2
+
+#./llama-llava-cli -m ./mymodels/ggml-model-q4_k.gguf  --mmproj ./mymodels/mmproj-model-f16.gguf -c 4096 --image $1 -p $2
+
+./llama-llava-cli --cpu-strict 1 -m ./mymodels/ggml-model-q4_k.gguf  --mmproj ./mymodels/mmproj-model-f16.gguf --image $1 -p $2
